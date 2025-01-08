@@ -13,12 +13,16 @@ if( !defined('ABSPATH') ) {
   die('This is no good.');
 }
 
+
+
 // DEFINE GLOBAL CONSTANTS
 
 define('_FNDRY_OB_PATH_', plugin_dir_path(__FILE__));
 define("_FNDRY_OB_URL_", plugin_dir_url(__FILE__));
 
-define('_FNDRY_OB_FIELD_PREFIX_', 'anvil_ob_field_');
+require_once _FNDRY_OB_PATH_ . 'constants.php';
+
+define('_FNDRY_OB_FIELD_PREFIX_', 'foundry_ob_field_');
 define('_FNDRY_OB_NAME_', 'Order Book');
 define('_FNDRY_OB_SLUG_', 'foundry-order-book');
 
@@ -38,7 +42,7 @@ define("_FNDRY_BO_ASSET_JS_", _FNDRY_OB_SLUG_ . "-js-");
 
 // MAIN PLUGIN CLASS
 
-if(!class_exists('ProteaOrders')) {
+if(!class_exists('FoundryOrderBook')) {
 
   class FoundryOrderBook {
 
@@ -55,7 +59,7 @@ if(!class_exists('ProteaOrders')) {
       add_action("wp_enqueue_scripts", array($this, "enqueue_assets"));
 
       // include_once _FNDRY_OB_PATH_ . '/common/utilities.php';
-      // include_once _FNDRY_OB_PATH_ . '/admin/admin-screen.php';
+      include_once _FNDRY_OB_PATH_ . '/admin/admin-screen.php';
 
       // Custom post types
       // include_once _FNDRY_OB_PATH_ . '/custom-post-types/orders.php';
