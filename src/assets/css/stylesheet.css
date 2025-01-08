@@ -1,0 +1,130 @@
+/* GLOBAL +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+  /* VARS ------------------------------------------------------------------- */
+
+  :root {
+    --botanist-color-primary: #715AFF;
+
+    --botanist-color-dark: #2A2D34;
+    --botanist-color-light: #494E5B;
+    --botanist-color-lighter: #C6CAD2;
+    --botanist-color-lightest: #FFFFFF;
+
+    --botanist-gutter-sm: 10px;
+    --botanist-gutter-md: 20px;
+    --botanist-gutter-lg: 40px;
+
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+  /* BUTTON ----------------------------------------------------------------- */
+
+  .a-button {
+
+    --a-button-border-radius: 5px;
+    --a-button-border-width: 2px;
+    --a-button-border-color: var(--botanist-color-primary);
+    --a-button-bg-color: var(--botanist-color-primary);
+    --a-button-text-color: var(--botanist-color-lightest);
+
+    background-color: var(--a-button-bg-color);
+    border-width: var(--a-button-border-width);
+    border-color: var(--a-button-border-color);
+    color: var(--a-button-text-color);
+    padding: var(--botanist-gutter-sm);
+
+  }
+
+  .a-button:hover {
+    transform: translate3d(0,2px,0) scale(1.05);
+  }
+
+  .a-button--secondary {
+
+    --a-button-bg-color: transparent;
+    --a-button-text-color: var(--botanist-color-dark);
+
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+  /* FIELD ------------------------------------------------------------------ */
+
+  .a-field {
+
+    --a-field-border-radius: 5px;
+    --a-field-border-color: var(--botanist-color-light);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--botanist-gutter-sm);
+  }
+
+  .a-field:not(:last-child) {
+    margin-bottom: var(--botanist-gutter-md);
+  }
+
+  .a-field > label {}
+  .a-field > input,
+  .a-field > select,
+  .a-field > textarea {
+    border: solid 2px var(--a-field-border-color);
+    border-radius: var(--a-field-border-radius);
+    padding: var(--botanist-gutter-sm);
+    background: var(--botanist-color-lightest);
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+/* END ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/* FORM +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+  /* FORM ------------------------------------------------------------------- */
+
+  .botanist-form {}
+
+  /* END -------------------------------------------------------------------- */
+
+  /* FORM -> SECTION -------------------------------------------------------- */
+
+  .botanist-form__section {
+  }
+
+  .botanist-form__section--bordered {
+    border: solid 2px var(--botanist-color-lighter);
+    padding: var(--botanist-gutter-md);
+  }
+
+  .botanist-form__section:not(:last-child) {
+    margin-bottom: var(--botanist-gutter-lg);
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+  /* FORM -> GROUP ---------------------------------------------------------- */
+
+  .botanist-form__group {
+    
+    padding: var(--botanist-gutter-sm);
+  }
+
+  .botanist-form__group:not(:last-child) {
+    border-bottom: solid 2px var(--botanist-color-lighter);
+    border-radius: 5px;
+    margin-bottom: var(--botanist-gutter-md);
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+  /* FORM -> FOOTER --------------------------------------------------------- */
+
+  .botanist-form__footer {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+/* END ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */

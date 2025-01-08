@@ -1,0 +1,118 @@
+version: "3.6"
+services:
+  wordpress:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ${WP_PLUGIN_NAME}_wordpress
+    volumes:
+      - ./data/wp:/var/www/html
+      - ./src:/var/www/html/wp-content/plugins/${WP_PLUGIN_NAME}
+      - ./bin:/scripts
+    environment:
+      # our local dev environment
+      WORDPRESS_DB_NAME: ${MYSQL_DB_NAME}
+      WORDPRESS_DB_HOST: database
+      WORDPRESS_DB_USER: ${MYSQL_USERNAME}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+      WORDPRESS_TABLE_PREFIX: ${WP_PREFIX}
+      WORDPRESS_AUTH_KEY: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_SECURE_KEY: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_LOGGED_IN_KEY: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_NONCE_KEY: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_SECURE_AUTH_SALT: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_LOGGED_IN_SALT: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_NONCE_SALT: 5f6ede1b94d25a2294e29eeba929a8c80a5ac0fb
+      WORDPRESS_CONFIG_EXTRA: |
+
+        /* configure mail server */
+        # define('WORDPRESS_SMTP_AUTH', false);
+        # define('WORDPRESS_SMTP_SECURE', '');
+        # define('WORDPRESS_SMTP_HOST', 'mailhog');
+        # define('WORDPRESS_SMTP_PORT', '1025');
+        # define('WORDPRESS_SMTP_USERNAME', null);
+        # define('WORDPRESS_SMTP_PASSWORD', null);
+        # define('WORDPRESS_SMTP_FROM', 'whoever@example.com');
+        # define('WORDPRESS_SMTP_FROM_NAME', 'Whoever');
+
+        # define( 'WP_MAILHOG_HOST', 'mailhog' );
+        # define( 'WP_MAILHOG_PORT', '1025' );
+
+        /* add anymore custom configs here... */
+    depends_on:
+      - database
+      - phpmyadmin
+    restart: always
+    ports:
+      - 8080:80
+    networks:
+      - wordpress
+
+  database:
+    image: mariadb:latest
+    container_name: ${WP_PLUGIN_NAME}_db
+    volumes:
+      - ./data/db:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_USER=${MYSQL_USERNAME}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DB_NAME}
+    restart: always
+    networks:
+      - wordpress
+
+  phpmyadmin:
+    depends_on:
+      - database
+    image: phpmyadmin/phpmyadmin:latest
+    container_name: ${WP_PLUGIN_NAME}_phpmyadmin
+    restart: always
+    ports:
+      - 8180:80
+    environment:
+      PMA_HOST: database
+      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+    networks:
+      - wordpress
+
+  cli:
+    image: wordpress:cli
+    container_name: ${WP_PLUGIN_NAME}_cli
+    volumes:
+      - ./data/wp:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: database:3306
+      WORDPRESS_DB_NAME: ${MYSQL_DB_NAME}
+      WORDPRESS_DB_USER: ${MYSQL_USERNAME}
+      WORDPRESS_DB_PASSWORD: ${MYSQL_PASSWORD}
+    depends_on:
+      - database
+      - wordpress
+    command: "tail -f /dev/null"
+    networks:
+      - wordpress
+
+  composer:
+    image: composer:latest
+    container_name: ${WP_PLUGIN_NAME}_composer
+    volumes:
+      - ./src:/var/www/html/wp-content/plugins/${WP_PLUGIN_NAME}
+    working_dir: /var/www/html/wp-content/plugins/${WP_PLUGIN_NAME}
+    networks:
+      - wordpress
+
+  mailhog:
+    image: mailhog/mailhog
+    container_name: ${WP_PLUGIN_NAME}_mailhog
+    ports:
+      - "1025:1025"
+      - "8025:8025"
+    networks:
+      - wordpress
+
+networks:
+  wordpress:
+    ipam:
+      config:
+        - subnet: 172.25.0.0/16
