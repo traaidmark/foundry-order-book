@@ -60,6 +60,13 @@
   }
 
   /**
+   * field
+   */
+  function generate_post_type_fields() {
+    
+  }
+
+  /**
    * Builds options for a Select field from newline separated strings
    * @return array
    */

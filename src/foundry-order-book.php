@@ -9,36 +9,24 @@
 * Author URI: https://traaidmark.com
 **/
 
+
+
 if( !defined('ABSPATH') ) {
   die('This is no good.');
 }
-
-
 
 // DEFINE GLOBAL CONSTANTS
 
 define('_FNDRY_OB_PATH_', plugin_dir_path(__FILE__));
 define("_FNDRY_OB_URL_", plugin_dir_url(__FILE__));
 
+require_once _FNDRY_OB_PATH_ . '/vendor/autoload.php';
 require_once _FNDRY_OB_PATH_ . 'constants.php';
-
-define('_FNDRY_OB_FIELD_PREFIX_', 'foundry_ob_field_');
-define('_FNDRY_OB_NAME_', 'Order Book');
-define('_FNDRY_OB_SLUG_', 'foundry-order-book');
-
-// 2. Templates
-
-define(
-  "_FNDRY_OB_TPL_FORM_CREATE_", 
-  _FNDRY_OB_PATH_ . 'templates/ob-form-order-create.php'
-);
+require_once _FNDRY_OB_PATH_ . 'includes/settings.php';
+require_once _FNDRY_OB_PATH_ . 'includes/order-post-type.php';
+require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-fields.php';
 
 
-// Global variables -> Assets
-define("_FNDRY_BO_ASSETS_URL_", _FNDRY_OB_URL_ . "assets");
-define("_FNDRY_BO_ASSETS_V_", "0.1.0");
-define("_FNDRY_BO_ASSET_CSS_", _FNDRY_OB_SLUG_ . "-css-");
-define("_FNDRY_BO_ASSET_JS_", _FNDRY_OB_SLUG_ . "-js-");
 
 // MAIN PLUGIN CLASS
 
@@ -46,23 +34,52 @@ if(!class_exists('FoundryOrderBook')) {
 
   class FoundryOrderBook {
 
+    private $foundry_ob_settings;
+    private $foundry_ob_fields;
+    private $foundry_ob_orders;
+
+
     public function __construct()
     {
       // PHP Composer Autoload
-      require_once( _FNDRY_OB_PATH_ . '/vendor/autoload.php');
+
+      add_action('after_setup_theme', array($this, 'load_carbon_fields'));
+
+      $this->foundry_ob_settings = new Foundry_OB_Settings;
+      $this->foundry_ob_fields = new Foundry_OB_Fields;
+      $this->foundry_ob_orders = new Foundry_OB_Orders;
     
+    }
+
+    /**
+     * Load Carbon Fields
+     * 
+     * @return void
+     */
+    public function load_carbon_fields() {
+      \Carbon_Fields\Carbon_Fields::boot();
     }
 
     // INIT
     public function initialize() {
+      
+      $this->foundry_ob_settings->register();
+      $this->foundry_ob_orders->register($this->foundry_ob_fields);
 
-      add_action("wp_enqueue_scripts", array($this, "enqueue_assets"));
+      // SET FIELDS
 
-      // include_once _FNDRY_OB_PATH_ . '/common/utilities.php';
-      include_once _FNDRY_OB_PATH_ . '/admin/admin-screen.php';
+      $this->foundry_ob_fields->register(
+        'customer', 
+        _FNDRY_OB_DEFAULT_CUSTOMER_FIELDS_
+      );
+
+      // var_dump(carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'customer_fields' ));
+
+
+      // include_once _FNDRY_OB_PATH_ . '/includes/settings.php';
 
       // Custom post types
-      // include_once _FNDRY_OB_PATH_ . '/custom-post-types/orders.php';
+      // include_once _FNDRY_OB_PATH_ . '/includes/custom-post-type-orders.php';
 
       // Shortcodes
       // include_once _FNDRY_OB_PATH_ . '/shortcodes/quote-form.php';
