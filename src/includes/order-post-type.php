@@ -61,9 +61,9 @@ class Foundry_OB_Orders {
 
   }
 
-  // /**
-  //  * Initializes customer block
-  //  */
+  /**
+   * Initializes customer block
+   */
   public function init_customer_block() {
 
     $this->fields->register(
@@ -71,7 +71,7 @@ class Foundry_OB_Orders {
       carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'customer_fields' )
     );
 
-    $fields = $this->fields->generate_backend_fields('customer');
+    $fields = $this->fields->generate_admin_fields('customer');
 
     return Container::make( 'post_meta', 'Customer Information' )
         ->where( 'post_type', '=', _FNDRY_OB_POST_TYPE_ )
@@ -80,9 +80,9 @@ class Foundry_OB_Orders {
         ->add_fields( $fields );
   }
 
-  // /**
-  //  * Initializes order block
-  //  */
+  /**
+   * Initializes order block
+   */
   public function init_service_block() {
 
     $this->fields->register(
@@ -90,7 +90,7 @@ class Foundry_OB_Orders {
       carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'service_fields' )
     );
 
-    $fields = $this->fields->generate_backend_fields('service');
+    $fields = $this->fields->generate_admin_fields('service');
 
     return Container::make( 'post_meta', 'Order Information' )
       ->where( 'post_type', '=', _FNDRY_OB_POST_TYPE_ )
