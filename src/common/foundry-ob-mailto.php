@@ -54,8 +54,6 @@
         ),
       );
 
-
-
     }
 
     public function push($data) {
@@ -65,33 +63,39 @@
       $this->user['email'] = $data['customer']['email_address'];
 
       if(!!$this->user['notify']) {
-        $this->send($this->user);
+        $this->send(
+          _FNDRY_OB_PATH_ . 'templates/ob-email-order-user-confirmation.php',
+          $this->user
+        );
       }
 
       if(!!$this->owner['notify']) {
-        $this->send($this->owner);
+        $this->send(
+          _FNDRY_OB_PATH_ . 'templates/ob-email-order-owner-confirmation.php',
+          $this->owner
+        );
       }
 
     }
 
-    public function buildTemplate($data) {
+    public function buildTemplate($template, $data) {
       ob_start();
       $output = '';
-      include _FNDRY_OB_PATH_ . 'templates/ob-email-order-confirmation.php';
+      include $template;
       $output = ob_get_contents();
       ob_end_clean();
 
       return $output;
     }
 
-    public function send($data) {
+    public function send($template, $data) {
 
       $mail_headers = [];
       $mail_headers[] = "From: {$this->config['from-name']} <{$this->config['from-email']}>";
       $mail_headers[] = "Reply-to: {$data['name']} <{$data['email_address']}>";
       $mail_headers[] = "Content-Type: text/html";
 
-      $content = $this->buildTemplate($this->submission);
+      $content = $this->buildTemplate($template, $this->submission);
 
       wp_mail($data['email'], $data['subject'], $content, $mail_headers);
     }

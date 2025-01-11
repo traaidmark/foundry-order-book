@@ -17,15 +17,6 @@ class Foundry_OB_Settings {
     }
 
     /**
-     * Load Carbon Fields
-     * 
-     * @return void
-     */
-    // public function load_carbon_fields() {
-    //   \Carbon_Fields\Carbon_Fields::boot();
-    // }
-
-    /**
      * Initializes the admin screen
      * 
      * @return array()
@@ -106,7 +97,6 @@ class Foundry_OB_Settings {
         __('Email Subject')
       )
       ->set_default_value('A new order has been created!'),
-        // ->set_default_value('fndry-ob-')
 
       Field::make( 'html', _FNDRY_OB_FIELD_PREFIX_ . 'email_user_text' )
         ->set_html( '<h1>User Notification Settings</h1><p>Configure whether you want to email a notification of every submission to the user.</p>' ),
