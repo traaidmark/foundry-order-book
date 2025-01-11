@@ -53,3 +53,8 @@ define("_FNDRY_BO_ASSETS_URL_", _FNDRY_OB_URL_ . "assets");
 define("_FNDRY_BO_ASSETS_V_", "0.1.0");
 define("_FNDRY_BO_ASSET_CSS_", _FNDRY_OB_SLUG_ . "-css-");
 define("_FNDRY_BO_ASSET_JS_", _FNDRY_OB_SLUG_ . "-js-");
+
+
+// REST API
+
+define("_FNDRY_OB_REST_API_", "v1/foundry-order-book/");

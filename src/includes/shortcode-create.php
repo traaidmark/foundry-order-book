@@ -31,6 +31,7 @@ class Foundry_OB_Shortcode_Create {
     return foundry_render_template(
       _FNDRY_OB_PATH_ . 'templates/ob-form-order-create.php',
       array(
+        "endpoint" => get_rest_url(null, _FNDRY_OB_REST_API_ . 'create'),
         "button_label" => 'Create Order',
         "customer-fields" => $customer_fields,
         "service-fields" => $service_fields,

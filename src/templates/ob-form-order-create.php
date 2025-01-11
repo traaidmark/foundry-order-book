@@ -3,35 +3,43 @@
   const orderForm = () => {
     console.log('ORDER-BOOK: SUBMIT')
 
-    const endpoint = 'http://localhost/v1/lol-test';
+    const initFormState = {
+      customer: {},
+      services: [],
+    };
 
     const form = {
-      nonce: undefined,
       customer: {},
       services: [],
     }
 
-    const isLoading = false;
+    let isLoading = false;
+    let isSubmitted = false;
 
-    const submit = () => {
+    const submit = (endpoint) => {
 
-      const endpoint = 'http://localhost/v1/lol-test';
+      isLoading = true;
 
       console.log('ORDER-BOOK > ENDPOINT: ', endpoint);
       console.log('ORDER-BOOK > DATA', JSON.stringify(form));
-      
-      // fetch(endpoint,{
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(form),
-      // })
-      //   .then((res) => console.log('res happened',res))
-      //   .catch((err) => console.log('err happened', err.message))
+
+      fetch(endpoint,{
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(form),
+      })
+        .then((res) => {
+          isLoading = false;
+          isSubmitted = true;
+          console.log('res happened',res)
+        })
+        .catch((err) => console.log('err happened', err.message))
     }
 
     return {
       form,
       isLoading,
+      isSubmitted,
       submit
     }
   };
@@ -41,8 +49,12 @@
 <form 
   class="botanist-form"
   x-data="orderForm()" 
-  x-on:submit.prevent="submit"
+  x-on:submit.prevent="submit('<?php echo $data['endpoint']; ?>')"
 >
+  
+  <aside x-show="isLoading">
+    <p>Submission has been submitted successfully.</p>
+  </aside>
   <div class="botanist-form__section">
     <?php 
       foreach ($data['customer-fields'] as $field) {
@@ -65,12 +77,10 @@
     </footer>
   </div>
   <footer class="botanist-form__footer">
-    <button type="submit" class="a-button">
-      <?php echo $data['button_label'] ?>
+    <button type="submit" class="a-button" bind:disabled="isLoading">
+      <span x-show="!isLoading"><?php echo $data['button_label'] ?></span>
+      <span x-show="isLoading">Submitting...</span>
     </button>
   </footer>
-  <div x-text="form.customer">
-    
-  </div>
 </form>
 
