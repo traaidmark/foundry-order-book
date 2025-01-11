@@ -47,10 +47,10 @@
           _FNDRY_OB_FIELD_PREFIX_ . 'email_user_subject'
         ),
         'content' => carbon_get_theme_option( 
-          _FNDRY_OB_FIELD_PREFIX_ . 'email_user_intro'
+          _FNDRY_OB_FIELD_PREFIX_ . 'email_content'
         ),
         'footer' => carbon_get_theme_option( 
-          _FNDRY_OB_FIELD_PREFIX_ . 'email_user_footer'
+          _FNDRY_OB_FIELD_PREFIX_ . 'email_footer'
         ),
       );
 

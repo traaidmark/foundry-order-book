@@ -2,6 +2,8 @@
 
 <p>Dear <?php echo $data['customer']['name']; ?>,</p>
 
+<?php echo wpautop( $data['content'] ); ?>
+
 <h3>Customer Information:</h3>
 
 <table>
@@ -15,5 +17,8 @@
   </tbody>
 </table>
 
+<?php echo wpautop( $data['footer'] ); ?>
+
+<hr />
 
 <p><small>Powered by Foundry - Order Book.</small></p>
