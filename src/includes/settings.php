@@ -23,6 +23,7 @@ class Foundry_OB_Settings {
      */
     public function init_admin_screen() {
       Container::make( 'theme_options', _FNDRY_OB_NAME_ )
+        ->add_tab( __('Status Settings'), $this->init_tab_status())
         ->add_tab( __('Order Settings'), $this->init_tab_orders())
         ->add_tab( __('Email Settings'), $this->init_tab_email());
     }
@@ -35,6 +36,14 @@ class Foundry_OB_Settings {
   public function init_tab_orders() {
 
     return array(
+
+      Field::make(
+        'text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'order_prefix',
+        __('Order Prefix')
+      )
+      ->set_help_text('This code is prefixed to the order number.')
+      ->set_default_value(_FNDRY_OB_ORDER_PREFIX_),
 
       Field::make( 'html', _FNDRY_OB_FIELD_PREFIX_ . 'customer_text' )
         ->set_html( '<h1>Customer Fields</h1><p>Add fields that relate to the customer below.</p><p>Default fixed fields: <strong>Name</strong>, <strong>Email Address</strong></p>' ),
@@ -130,6 +139,45 @@ class Foundry_OB_Settings {
       )
       ->set_help_text('Content to display at the bottom of the email. Useful for contact & support purposes.'),
 
+
+    );
+
+  }
+
+  /**
+   * Initializes order settings tab on the admin screen.
+   * 
+   * @return array()
+   */
+  function init_tab_status() {
+
+    return array(
+
+      Field::make( 'html', _FNDRY_OB_FIELD_PREFIX_ . 'status_text' )
+        ->set_html( '<h1>Status Settings</h1>' ),
+
+      Field::make(
+        'checkbox',
+        _FNDRY_OB_FIELD_PREFIX_ . 'enable_order_tracking',
+        __('Enable order tracking')
+      )
+      ->set_help_text('Allow users to track the status of the work they commissioned.'),
+
+      Field::make(
+        'textarea',
+        _FNDRY_OB_FIELD_PREFIX_ . 'status',
+        __('Statuses')
+      )
+        ->set_attribute( 'placeholder', 'Item 1' )
+        ->set_help_text('Enter an item per line'),
+      
+      Field::make(
+        'textarea',
+        _FNDRY_OB_FIELD_PREFIX_ . 'line_status',
+        __('Line item statuses')
+      )
+        ->set_attribute( 'placeholder', 'Item 1' )
+        ->set_help_text('Enter an item per line. Leave empty to disable line item statuses.'),
 
     );
 

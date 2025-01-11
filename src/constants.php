@@ -24,6 +24,10 @@ define('_FNDRY_OB_DEFAULT_CUSTOMER_FIELDS_', array(
   ),
 ));
 
+# 2. ORDER CONSTANTS
+
+define('_FNDRY_OB_ORDER_PREFIX_', 'FNDRY-OB-');
+
 # 2. CUSTOM POST TYPE CONSTANTS
 
 define('_FNDRY_OB_POST_TYPE_', 'foundry-order-book');

@@ -1,6 +1,7 @@
 <?php
 
   require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-mailto.php';
+  require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-posts.php';
 
 class Foundry_OB_Rest_Api {
 
@@ -27,21 +28,20 @@ class Foundry_OB_Rest_Api {
 
     $params = $data->get_params();
 
-
     // TODO VERIFY NONCE
 
     // // SAVE TO POST
 
-    // save_submission_to_post($params);
+    $post = save_post($params);
 
-    // // SEND EMAIL TO ADMIN
+    $params['id'] = $post;
+
+    // // SEND CONFIRMATION EMAIL
 
     $mail = new Foundry_OB_Mailto;
     $mail->push($params);
 
     var_dump($mail->debug());
-
-    // SEND EMAIL TO USER
 
     return new WP_REST_Response('success',200);
 
