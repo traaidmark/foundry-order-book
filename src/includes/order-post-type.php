@@ -24,6 +24,7 @@ class Foundry_OB_Orders {
     $this->fields = $fields;
 
     add_action('init', array($this,'register_custom_post_type'));
+    add_action('carbon_fields_register_fields', array($this,'init_status_block'));
     add_action('carbon_fields_register_fields', array($this,'init_service_block'));
     add_action('carbon_fields_register_fields', array($this,'init_customer_block'));
 
@@ -62,6 +63,28 @@ class Foundry_OB_Orders {
   }
 
   /**
+   * Initializes status block
+   */
+  public function init_status_block() {
+
+    $statuses = carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'status' );
+    $field_opts = generate_key_select_options($statuses);
+
+    return Container::make( 'post_meta', 'Order Status' )
+        ->where( 'post_type', '=', _FNDRY_OB_POST_TYPE_ )
+        ->set_priority( 'high' )
+        ->set_context('normal')
+        ->add_fields( array(
+          Field::make(
+            'select', _FNDRY_OB_FIELD_PREFIX_ . 'status',
+            __('Order Status') 
+          )
+            ->add_options( $field_opts )
+            ->set_default_value('pending')
+        ) );
+  }
+
+  /**
    * Initializes customer block
    */
   public function init_customer_block() {
@@ -85,12 +108,28 @@ class Foundry_OB_Orders {
    */
   public function init_service_block() {
 
+    $service_fields = carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'service_fields' );
+    $line_statuses = carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'line_status' );
+
     $this->fields->register(
       'service', 
-      carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'service_fields' )
+      $service_fields
     );
 
     $fields = $this->fields->generate_admin_fields('service');
+
+    if(!!$line_statuses) {
+      $field_opts = generate_key_select_options($line_statuses);
+      array_unshift(
+        $fields,
+        Field::make(
+          'select', _FNDRY_OB_FIELD_PREFIX_ . 'status',
+          __('Item Status') 
+        )
+          ->add_options( $field_opts )
+          ->set_default_value('pending')
+      );
+    }
 
     return Container::make( 'post_meta', 'Order Information' )
       ->where( 'post_type', '=', _FNDRY_OB_POST_TYPE_ )

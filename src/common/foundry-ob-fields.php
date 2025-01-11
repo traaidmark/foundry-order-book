@@ -56,7 +56,7 @@
     public function generate_admin_fields($context) {
 
       $fields = array();
-
+      
       foreach ($this->fields[$context] as $field) {
 
         if($field['_type'] === 'text') {
