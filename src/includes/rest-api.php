@@ -1,5 +1,7 @@
 <?php
 
+  require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-mailto.php';
+
 class Foundry_OB_Rest_Api {
 
   public function register() {
@@ -25,7 +27,6 @@ class Foundry_OB_Rest_Api {
 
     $params = $data->get_params();
 
-    var_dump($params);
 
     // TODO VERIFY NONCE
 
@@ -35,13 +36,14 @@ class Foundry_OB_Rest_Api {
 
     // // SEND EMAIL TO ADMIN
 
-    // $mail = new BotanistMailer();
+    $mail = new Foundry_OB_Mailto;
+    $mail->push($params);
 
-    // $mail->send();
+    var_dump($mail->debug());
 
     // SEND EMAIL TO USER
 
-    // return new WP_REST_Response('success',200);
+    return new WP_REST_Response('success',200);
 
   }
 

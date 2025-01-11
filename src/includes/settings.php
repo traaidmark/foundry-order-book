@@ -32,7 +32,8 @@ class Foundry_OB_Settings {
      */
     public function init_admin_screen() {
       Container::make( 'theme_options', _FNDRY_OB_NAME_ )
-        ->add_tab( __('Order Settings'), $this->init_tab_orders());
+        ->add_tab( __('Order Settings'), $this->init_tab_orders())
+        ->add_tab( __('Email Settings'), $this->init_tab_email());
     }
 
     /**
@@ -64,6 +65,84 @@ class Foundry_OB_Settings {
     );
   }
 
+  /**
+   * Initializes email settings tab on the admin screen.
+   * 
+   * @return array()
+   */
+  function init_tab_email() {
 
+    return array(
+
+      Field::make( 'html', _FNDRY_OB_FIELD_PREFIX_ . 'email_owner_text' )
+        ->set_html( '<h1>Email Settings</h1><p>Configure whether you want to email a notification of every submission to your inbox.</p>' ),
+
+      Field::make(
+        'checkbox',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_notify',
+        __('Email submission to your inbox')
+      ),
+
+      Field::make(
+        'checkbox',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_include_submission',
+        __('Include copy of submission')
+      ),
+
+      Field::make(
+        'text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_name',
+        __('Name')
+      ),
+      
+        Field::make(
+        'text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_address',
+        __('Email Address')
+      ),
+      Field::make(
+        'text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_subject',
+        __('Email Subject')
+      )
+      ->set_default_value('A new order has been created!'),
+        // ->set_default_value('fndry-ob-')
+
+      Field::make( 'html', _FNDRY_OB_FIELD_PREFIX_ . 'email_user_text' )
+        ->set_html( '<h1>User Notification Settings</h1><p>Configure whether you want to email a notification of every submission to the user.</p>' ),
+  
+      Field::make(
+        'checkbox',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_user_notify',
+        __('Send confirmation email to user')
+      ),
+      Field::make(
+        'checkbox',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_user_include_submission',
+        __('Include copy of submission')
+      ),
+      Field::make(
+        'text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_user_subject',
+        __('Email Subject')
+      )
+      ->set_default_value('Your '. get_bloginfo('name') .' order has been submitted!'),
+      Field::make(
+        'rich_text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_content',
+        __('Custom email content')
+      )
+      ->set_help_text('Content to display at the start of the email. Useful for marketing purposes.'),
+      Field::make(
+        'rich_text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'email_footer',
+        __('Custom footer')
+      )
+      ->set_help_text('Content to display at the bottom of the email. Useful for contact & support purposes.'),
+
+
+    );
+
+  }
 
 }

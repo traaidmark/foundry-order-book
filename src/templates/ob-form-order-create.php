@@ -62,7 +62,7 @@
       }
     ?>
   </div>
-  <div class="botanist-form__section">
+  <div class="botanist-form__section botanist-form__section--bordered">
    <template x-for="(item, index) in form.services" :key="index">';
     <div class="botanist-form__group">
       <?php 
