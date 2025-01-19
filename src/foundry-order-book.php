@@ -27,6 +27,7 @@ require_once _FNDRY_OB_PATH_ . 'includes/settings.php';
 require_once _FNDRY_OB_PATH_ . 'includes/order-post-type.php';
 require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-fields.php';
 require_once _FNDRY_OB_PATH_ . 'includes/shortcode-create.php';
+require_once _FNDRY_OB_PATH_ . 'includes/shortcode-track.php';
 require_once _FNDRY_OB_PATH_ . 'includes/rest-api.php';
 
 // MAIN PLUGIN CLASS
@@ -40,6 +41,7 @@ if(!class_exists('FoundryOrderBook')) {
     private $foundry_ob_fields;
     private $foundry_ob_orders;
     private $foundry_ob_shortcode_create;
+    private $foundry_ob_shortcode_track;
     private $foundry_ob_rest_api;
 
 
@@ -54,6 +56,7 @@ if(!class_exists('FoundryOrderBook')) {
       $this->foundry_ob_fields = new Foundry_OB_Fields;
       $this->foundry_ob_orders = new Foundry_OB_Orders;
       $this->foundry_ob_shortcode_create = new Foundry_OB_Shortcode_Create;
+      $this->foundry_ob_shortcode_track = new Foundry_OB_Shortcode_Track;
       $this->foundry_ob_rest_api = new Foundry_OB_Rest_Api;
 
     }
@@ -74,6 +77,7 @@ if(!class_exists('FoundryOrderBook')) {
       $this->foundry_ob_settings->register();
       $this->foundry_ob_orders->register($this->foundry_ob_fields);
       $this->foundry_ob_shortcode_create->register($this->foundry_ob_fields);
+      $this->foundry_ob_shortcode_track->register();
       $this->foundry_ob_rest_api->register();
 
       // SET DEFAULT FIELDS
