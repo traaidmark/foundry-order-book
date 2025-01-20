@@ -31,29 +31,10 @@
       return $this->fields;
     }
 
-    public function generate_html_fields($context) {
-      $html = array();
-
-      foreach ($this->fields[$context] as $field) {
-
-        $field['scope'] = $this->scopes[$context];
-
-        array_push(
-          $html, 
-          foundry_render_template(
-            _FNDRY_OB_PATH_ . 'templates/ob-form-field.php',
-            $field
-          )
-        );
-      }
-      
-      return $html;
-    }
-
     /**
      * Generates fields consumable in Wordpress Admin from the fields list.
      */
-    public function generate_admin_fields($context) {
+    public function generate_admin_fields($context, $key_prefix) {
 
       $fields = array();
       
@@ -64,7 +45,7 @@
             $fields,
             Field::make(
               'text',
-              _FNDRY_OB_FIELD_PREFIX_ . str_slugify($field['name'], '_'), 
+              $key_prefix . str_slugify($field['name'], '_'), 
               __($field['name']) ),
           );
         }

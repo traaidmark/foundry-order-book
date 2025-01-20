@@ -41,3 +41,12 @@ function str_slugify($text, string $divider = '-')
 
   return $text;
 }
+
+/**
+ * Creates a human friendly label from field names
+ */
+function str_label_maker($text, $divider, $prefix) {
+  $rem_word = str_replace($prefix, '', $text);
+
+  return ucfirst(str_replace($divider, ' ', $rem_word));
+}

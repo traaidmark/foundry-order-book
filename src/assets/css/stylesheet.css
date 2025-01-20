@@ -3,16 +3,19 @@
   /* VARS ------------------------------------------------------------------- */
 
   :root {
-    --botanist-color-primary: #715AFF;
+    --fndry-ob-color-primary: #715AFF;
 
-    --botanist-color-dark: #2A2D34;
-    --botanist-color-light: #494E5B;
-    --botanist-color-lighter: #C6CAD2;
-    --botanist-color-lightest: #FFFFFF;
+    --fndry-ob-color-dark: #2A2D34;
+    --fndry-ob-color-light: #494E5B;
+    --fndry-ob-color-lighter: #C6CAD2;
+    --fndry-ob-color-lightest: #FFFFFF;
 
-    --botanist-gutter-sm: 10px;
-    --botanist-gutter-md: 20px;
-    --botanist-gutter-lg: 40px;
+    --fndry-ob-color-success: #BDF2BA;
+    --fndry-ob-color-success-dark: #FFFFFF;
+
+    --fndry-ob-gutter-sm: 10px;
+    --fndry-ob-gutter-md: 20px;
+    --fndry-ob-gutter-lg: 40px;
 
   }
 
@@ -24,16 +27,27 @@
 
     --a-button-border-radius: 5px;
     --a-button-border-width: 2px;
-    --a-button-border-color: var(--botanist-color-primary);
-    --a-button-bg-color: var(--botanist-color-primary);
-    --a-button-text-color: var(--botanist-color-lightest);
+    --a-button-border-color: var(--fndry-ob-color-primary);
+    --a-button-bg-color: var(--fndry-ob-color-primary);
+    --a-button-text-color: var(--fndry-ob-color-lightest);
 
     background-color: var(--a-button-bg-color);
     border-width: var(--a-button-border-width);
     border-color: var(--a-button-border-color);
+    border-style: solid;
     color: var(--a-button-text-color);
-    padding: var(--botanist-gutter-sm);
+    padding: var(--fndry-ob-gutter-sm);
+    cursor: pointer;
 
+  }
+
+  .a-button:disabled {
+    --a-button-border-color: var(--fndry-ob-color-lighter);
+    --a-button-bg-color: var(--fndry-ob-color-lighter);
+    --a-button-text-color: var(--fndry-ob-color-dark);
+  }
+  .a-button:hover:disabled {
+    transform: translate3d(00px,0) scale(1);
   }
 
   .a-button:hover {
@@ -43,7 +57,7 @@
   .a-button--secondary {
 
     --a-button-bg-color: transparent;
-    --a-button-text-color: var(--botanist-color-dark);
+    --a-button-text-color: var(--fndry-ob-color-dark);
 
   }
 
@@ -54,15 +68,15 @@
   .a-field {
 
     --a-field-border-radius: 5px;
-    --a-field-border-color: var(--botanist-color-light);
+    --a-field-border-color: var(--fndry-ob-color-light);
 
     display: flex;
     flex-direction: column;
-    gap: var(--botanist-gutter-sm);
+    gap: var(--fndry-ob-gutter-sm);
   }
 
   .a-field:not(:last-child) {
-    margin-bottom: var(--botanist-gutter-md);
+    margin-bottom: var(--fndry-ob-gutter-md);
   }
 
   .a-field > label {}
@@ -71,8 +85,36 @@
   .a-field > textarea {
     border: solid 2px var(--a-field-border-color);
     border-radius: var(--a-field-border-radius);
-    padding: var(--botanist-gutter-sm);
-    background: var(--botanist-color-lightest);
+    padding: var(--fndry-ob-gutter-sm);
+    background: var(--fndry-ob-color-lightest);
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+  /* MESSAGE ---------------------------------------------------------------- */
+
+  .a-message {
+
+    --a-msg-border-radius: 5px;
+    --a-msg-background-color: var(--fndry-ob-color-lighter);
+    --a-msg-text-color: var(--fndry-ob-color-dark);
+
+    display: flex;
+    flex-direction: column;
+    gap: var(--fndry-ob-gutter-sm);
+    background-color: var(--a-msg-background-color);
+    border-radius: var(--a-msg-border-radius);
+    padding: var(--fndry-ob-gutter-md);
+  }
+
+  .a-message > p {
+    margin: 0;
+    color: var(--a-msg-text-color);
+    font-size: 0.89rem;
+  }
+
+  .a-message--success {
+    --a-msg-background-color: var(--fndry-ob-color-success);
   }
 
   /* END -------------------------------------------------------------------- */
@@ -83,46 +125,49 @@
 
   /* FORM ------------------------------------------------------------------- */
 
-  .botanist-form {}
+  .fndry-form {}
 
   /* END -------------------------------------------------------------------- */
 
   /* FORM -> SECTION -------------------------------------------------------- */
 
-  .botanist-form__section {
+  .fndry-form__section {
   }
 
-  .botanist-form__section--bordered {
-    border: solid 2px var(--botanist-color-lighter);
-    padding: var(--botanist-gutter-md);
+  .fndry-form__section--bordered {
+    border: solid 2px var(--fndry-ob-color-lighter);
+    padding: var(--fndry-ob-gutter-md);
   }
 
-  .botanist-form__section:not(:last-child) {
-    margin-bottom: var(--botanist-gutter-lg);
+  .fndry-form__section:not(:last-child) {
+    margin-bottom: var(--fndry-ob-gutter-lg);
   }
 
   /* END -------------------------------------------------------------------- */
 
   /* FORM -> GROUP ---------------------------------------------------------- */
 
-  .botanist-form__group {
+  .fndry-form__group {
     
-    padding: var(--botanist-gutter-sm);
+    padding: var(--fndry-ob-gutter-sm);
   }
 
-  .botanist-form__group:not(:last-child) {
-    border-bottom: solid 2px var(--botanist-color-lighter);
+  .fndry-form__group:not(:last-child) {
+    border-bottom: solid 2px var(--fndry-ob-color-lighter);
     border-radius: 5px;
-    margin-bottom: var(--botanist-gutter-md);
+    margin-bottom: var(--fndry-ob-gutter-md);
   }
 
   /* END -------------------------------------------------------------------- */
 
   /* FORM -> FOOTER --------------------------------------------------------- */
 
-  .botanist-form__footer {
+  .fndry-form__footer {
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
+    align-items: flex-end;
+    flex-direction: column;
+    gap: var(--fndry-ob-gutter-sm);
   }
 
   /* END -------------------------------------------------------------------- */

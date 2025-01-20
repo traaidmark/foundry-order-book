@@ -50,10 +50,9 @@
   x-data="trackForm()" 
   x-on:submit.prevent="submit('<?php echo $data['endpoint']; ?>')"
 >
-  
-  <aside x-show="isLoading">
+    <!-- <aside x-show="isLoading">
     <p>Submission has been submitted successfully.</p>
-  </aside>
+  </aside> -->
 
   <div class="botanist-form__section">
 
@@ -72,9 +71,8 @@
     </div>
   </div>
   <footer class="botanist-form__footer">
-    <button type="submit" class="a-button" bind:disabled="isLoading">
-      <span x-show="!isLoading"><?php echo $data['button_label'] ?></span>
-      <span x-show="isLoading">Submitting...</span>
+    <button type="submit" class="a-button">
+      <?php echo $data['button_label'] ?>
     </button>
   </footer>
 </form>

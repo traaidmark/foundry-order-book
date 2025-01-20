@@ -94,7 +94,7 @@ class Foundry_OB_Orders {
       carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'customer_fields' )
     );
 
-    $fields = $this->fields->generate_admin_fields('customer');
+    $fields = $this->fields->generate_admin_fields('customer', _FNDRY_OB_FIELD_PREFIX_);
 
     return Container::make( 'post_meta', 'Customer Information' )
         ->where( 'post_type', '=', _FNDRY_OB_POST_TYPE_ )
@@ -116,7 +116,7 @@ class Foundry_OB_Orders {
       $service_fields
     );
 
-    $fields = $this->fields->generate_admin_fields('service');
+    $fields = $this->fields->generate_admin_fields('service', _FNDRY_OB_FIELD_PREFIX_);
 
     if(!!$line_statuses) {
       $field_opts = generate_key_select_options($line_statuses);

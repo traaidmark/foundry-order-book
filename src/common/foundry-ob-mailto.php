@@ -57,10 +57,13 @@
     }
 
     public function push($data) {
+
+
+      
       $this->submission = $data;
       
-      $this->user['name'] = $data['customer']['name'];
-      $this->user['email'] = $data['customer']['email_address'];
+      $this->user['name'] = $data['customer'][_FNDRY_OB_FIELD_PREFIX_ . 'name'];
+      $this->user['email'] = $data['customer'][_FNDRY_OB_FIELD_PREFIX_ . 'email_address'];
 
       if(!!$this->user['notify']) {
         $this->send(

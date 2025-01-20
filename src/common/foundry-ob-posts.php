@@ -27,7 +27,7 @@
 
       carbon_set_post_meta( 
         $post_id, 
-        _FNDRY_OB_FIELD_PREFIX_ . $key, 
+        $key, 
         $value
       );
 

@@ -26,6 +26,8 @@ class Foundry_OB_Rest_Api {
    */
   function handle_order_submission($data) {
 
+    $order_prefix = carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'order_prefix' );
+
     $params = $data->get_params();
 
     // TODO VERIFY NONCE
@@ -35,6 +37,7 @@ class Foundry_OB_Rest_Api {
     $post = save_post($params);
 
     $params['id'] = $post;
+    $params['tracking_code'] = $order_prefix . $post;
 
     // // SEND CONFIRMATION EMAIL
 
@@ -43,7 +46,7 @@ class Foundry_OB_Rest_Api {
 
     var_dump($mail->debug());
 
-    return new WP_REST_Response('success',200);
+    // return new WP_REST_Response('success',200);
 
   }
 
