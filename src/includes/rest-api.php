@@ -18,6 +18,11 @@ class Foundry_OB_Rest_Api {
       'methods' => 'POST',
       'callback' => array($this, 'handle_order_submission')
     ));
+    
+    register_rest_route(_FNDRY_OB_REST_API_, 'track/(?P<slug>[a-z0-9 .\-]+)', array(
+      'methods' => 'GET',
+      'callback' => array($this, 'handle_order_track_request')
+    ));
 
   }
 
@@ -47,6 +52,50 @@ class Foundry_OB_Rest_Api {
     var_dump($mail->debug());
 
     // return new WP_REST_Response('success',200);
+
+  }
+
+  /**
+   * Handle order tracking
+   */
+  function handle_order_track_request($data) {
+
+    
+
+    $order_prefix = carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'order_prefix' );
+
+    $params = $data->get_params();
+    $tracking_code = $params['slug'];
+
+    // var_dump($tracking_code);
+
+    // if (!$tracking_code) {
+    //   return new WP_REST_Response(array(),200);
+    // }
+
+    // TODO VERIFY NONCE
+
+    // FETCH PUBLIC POST
+
+    $post = get_public_post($tracking_code);
+
+    if(count($post ) == 0) {
+      return new WP_REST_Response(
+        array(
+        'msg' => 'No results found',
+        'data' => null,
+        ),
+        200
+      );
+    }
+
+    return new WP_REST_Response(
+      array(
+        'msg' => 'No results found',
+        'data' => $post,
+      ),
+      200
+    );
 
   }
 

@@ -78,8 +78,7 @@ function render_fields($field_set, $scope) {
     <p x-text="response?.message"></p>
   </aside>
 
-  <!-- <div x-show="!response"> -->
-  <div>
+  <div x-show="!response">
     <div class="fndry-form__section">
     <?php
           render_fields($data['fields']['customer'], 'form.customer');

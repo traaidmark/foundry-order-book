@@ -1,79 +1,100 @@
 <script>
-  console.log('ORDER-TRACK')
-  const trackForm = () => {
+  const orderTrack = () => {
 
-    const initFormState = {
-      code: '',
-      res: [],
-    };
-
-    const form = {
-      code: '',
-      res: [],
-    }
-
-    let isLoading = false;
-    let isSubmitted = false;
-
-    const submit = (endpoint) => {
-
-      isLoading = true;
-
-      console.log('ORDER-TRACK > ENDPOINT: ', endpoint);
-      console.log('ORDER-TRACK > DATA', form.code);
-
-      // fetch(endpoint,{
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(form),
-      // })
-      //   .then((res) => {
-      //     isLoading = false;
-      //     isSubmitted = true;
-      //     console.log('res happened',res)
-      //   })
-      //   .catch((err) => console.log('err happened', err.message))
-    }
+    const endpoint = '<?php echo $data["endpoint"]; ?>';
 
     return {
-      form,
-      isLoading,
-      isSubmitted,
-      submit
+      order: undefined,
+      isLoading: false,
+      response: null,
+      code: undefined,
+      submit: async function(endpoint) {
+
+        if(!this.code) {
+          return;
+        }
+
+        this.isLoading = true;
+
+        try {
+
+          this.isLoading = false;
+
+          const request = await fetch(`${endpoint}/${this.code}`);
+          const res = await request.json();
+
+          console.log('res', res);
+
+          if(!res.data || res.data?.length === 0) {
+            this.response = {
+              type: 'a-message--error',
+              message: 'There is no order with this code. Please try again, or contact us for assistance.'
+            };
+            return;
+          }
+
+          return this.order = res.data;
+
+        } catch(err) {
+          this.isLoading = false;
+          this.response = {
+            type: 'a-message--error',
+            message: 'Something went wrong. Please contact us for assistance.'
+          };
+          console.log('err happened', err.message)
+        }
+      }
     }
   };
-
 </script>
 
 <form 
-  class="botanist-form"
-  x-data="trackForm()" 
-  x-on:submit.prevent="submit('<?php echo $data['endpoint']; ?>')"
+  class="fndry-form"
+  x-data="orderTrack()" 
+  x-on:submit.prevent="submit('<?php echo $data['endpoint']; ?>')" 
 >
-    <!-- <aside x-show="isLoading">
-    <p>Submission has been submitted successfully.</p>
-  </aside> -->
+  <aside x-show="response" class="a-message" :class="response?.type">
+    <p x-text="response?.message"></p>
+  </aside>
 
-  <div class="botanist-form__section">
+  <!-- <div x-show="!response"> -->
+  <div>
+    <div class="fndry-form__section">
+      <div class="a-field">
 
-    <div class="a-field">
+        <label for="foundry-ob-tracking-code">
+          Order tracking code
+        </label>
 
-      <label for="foundry-ob-tracking-code">
-        Order tracking code
-      </label>
-
-      <input 
-        type="text"
-        name="tracking-code" 
-        id="foundry-ob-tracking-code" 
-        x-model="<?php echo $field_scope; ?>"
-      />
+        <input 
+          type="text"
+          name="tracking-code" 
+          id="foundry-ob-tracking-code" 
+          x-model="code"
+        />
+      </div>
     </div>
+    <footer class="fndry-form__footer">
+      <button type="submit" class="a-button" x-bind:disabled="isLoading">
+        <span x-show="!isLoading"><?php echo $data['button_label'] ?></span>
+        <span x-show="isLoading">Searching...</span>
+      </button>
+      
+    </footer>
   </div>
-  <footer class="botanist-form__footer">
-    <button type="submit" class="a-button">
-      <?php echo $data['button_label'] ?>
-    </button>
-  </footer>
-</form>
+  <div class="fndry-results" x-show="!!order">
+    <h2 x-text="order?.code"></h2>
+    <h4 x-text="order?.status"></h4>
+    <h5>Order Information</h5>
 
+    <template x-for="item in order?.items">
+      <ul>
+        <template x-for="i in item">
+          <li><strong x-text="i.label"></strong><span x-text="i.value"></span></li>
+        </template>
+      </ul>
+    </template>
+
+    
+  </div>
+</form>

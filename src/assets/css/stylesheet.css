@@ -173,3 +173,50 @@
   /* END -------------------------------------------------------------------- */
 
 /* END ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+/* RESULTS ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
+
+  /* CONTAINER -------------------------------------------------------------- */
+
+  .fndry-results {
+    border: solid 2px var(--fndry-ob-color-lighter);
+    border-radius: 5px;
+    padding: var(--fndry-ob-gutter-md);
+    margin-top: var(--fndry-ob-gutter-lg);
+  }
+  .fndry-results > h2, .fndry-results > h3, .fndry-results > h4 {
+    margin-bottom: var(--fndry-ob-gutter-sm);
+    margin-top: 0;
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+  /* CONTAINER -------------------------------------------------------------- */
+
+  .fndry-results > ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .fndry-results > ul:not(:last-child) {
+    border-bottom: solid 1px var(--fndry-ob-color-lighter);
+    padding-bottom: var(--fndry-ob-gutter-sm);
+    margin-bottom: var(--fndry-ob-gutter-sm);
+  }
+
+  .fndry-results > ul > li {
+    display: flex;
+    justify-content: space-between;
+    color: var(--fndry-ob-color-light);
+    font-size: 0.9rem;
+  }
+
+  .fndry-results > ul > li > strong {
+    color: var(--fndry-ob-color-dark);
+    font-weight: bold;
+  }
+
+  /* END -------------------------------------------------------------------- */
+
+/* END ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ */
