@@ -6,6 +6,7 @@ use Carbon_Fields\Field;
 require_once _FNDRY_OB_PATH_ . 'common/util-field-helpers.php';
 require_once _FNDRY_OB_PATH_ . 'common/util-string-helpers.php';
 require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-fields.php';
+require_once _FNDRY_OB_PATH_ . 'common/foundry-ob-mailto.php';
 
 class Foundry_OB_Orders {
 
@@ -27,6 +28,7 @@ class Foundry_OB_Orders {
     add_action('carbon_fields_register_fields', array($this,'init_status_block'));
     add_action('carbon_fields_register_fields', array($this,'init_service_block'));
     add_action('carbon_fields_register_fields', array($this,'init_customer_block'));
+    add_action( 'post_updated', array($this, 'on_post_update'), 10, 3 );
 
   }
 
@@ -143,5 +145,36 @@ class Foundry_OB_Orders {
     ));
 
   }
+
+  /**
+   * Actions to run after a post has been updated.
+   */
+  public function on_post_update($post_ID, $post_after, $post_before){
+
+    $data = array(
+      'name' => carbon_get_post_meta( $post_ID, _FNDRY_OB_FIELD_PREFIX_ . 'name' ),
+      'email' => carbon_get_post_meta( $post_ID, _FNDRY_OB_FIELD_PREFIX_ . 'email_address' ),
+      'subject' => 'An update has been posted on your order!',
+      'tracking-code' => $post_after->post_title,
+      'site-name' => get_bloginfo('name'),
+      'site-url' => get_site_url(),
+      'tracking-url' => get_site_url() . '/' . carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'tracking_slug'),
+    );
+
+    // echo '<b>Post ID:</b><br />';
+    // var_dump($post_ID);
+
+    // echo '<b>NAME:</b><br />';
+    // var_dump($data);
+
+    $mail = new Foundry_OB_Mailto;
+    $mail->direct_send(
+      _FNDRY_OB_PATH_ . 'templates/ob-email-order-user-update.php', 
+      $data
+    );
+
+    // wp_die();
+    
+}
 
 }

@@ -162,6 +162,12 @@ class Foundry_OB_Settings {
         __('Enable order tracking')
       )
       ->set_help_text('Allow users to track the status of the work they commissioned.'),
+      Field::make(
+        'text',
+        _FNDRY_OB_FIELD_PREFIX_ . 'tracking_slug',
+        __('Tracking page slug')
+      )
+      ->set_help_text('The slug to your tracking page. (Example: /track-order)'),
 
       Field::make(
         'textarea',

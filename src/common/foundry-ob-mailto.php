@@ -52,6 +52,7 @@
         'footer' => carbon_get_theme_option( 
           _FNDRY_OB_FIELD_PREFIX_ . 'email_footer'
         ),
+        'tracking_url' => get_site_url() . '/' . carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'tracking_slug'),
       );
 
     }
@@ -95,10 +96,20 @@
 
       $mail_headers = [];
       $mail_headers[] = "From: {$this->config['from-name']} <{$this->config['from-email']}>";
-      $mail_headers[] = "Reply-to: {$data['name']} <{$data['email_address']}>";
       $mail_headers[] = "Content-Type: text/html";
 
       $content = $this->buildTemplate($template, $this->submission);
+
+      wp_mail($data['email'], $data['subject'], $content, $mail_headers);
+    }
+
+    public function direct_send($template, $data) {
+
+      $mail_headers = [];
+      $mail_headers[] = "From: {$this->config['from-name']} <{$this->config['from-email']}>";
+      $mail_headers[] = "Content-Type: text/html";
+
+      $content = $this->buildTemplate($template, $data);
 
       wp_mail($data['email'], $data['subject'], $content, $mail_headers);
     }

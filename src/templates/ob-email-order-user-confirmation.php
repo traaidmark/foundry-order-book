@@ -27,7 +27,7 @@
                 <table role="presentation" border="0" cellpadding="0" cellspacing="0">
                   <tbody>
                     <tr>
-                      <td> <a href="<?php echo $order_url ?>" target="_blank">Track Order: <?php echo $data['tracking_code']; ?></a> </td>
+                      <td> <a href="<?php echo $data['tracking_url'] ?>" target="_blank">Track Order: <?php echo $data['tracking_code']; ?></a> </td>
                     </tr>
                   </tbody>
                 </table>
