@@ -4,7 +4,7 @@
 * Plugin URI: https://traaidmark.com/projects/foundry/order-book
 * Description: The Foundry Order Book is an order taking plugin for people who provide mostly offline services. This is for the makers, the crafters and the people who get things done.
 * Text Domain: foundry-order-book
-* Version: 0.1.0
+* Version: 0.2.0
 * Author: Adrian Kirsten
 * Author URI: https://traaidmark.com
 **/
