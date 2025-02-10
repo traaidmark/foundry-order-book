@@ -60,8 +60,6 @@ class Foundry_OB_Rest_Api {
    */
   function handle_order_track_request($data) {
 
-    
-
     $order_prefix = carbon_get_theme_option( _FNDRY_OB_FIELD_PREFIX_ . 'order_prefix' );
 
     $params = $data->get_params();
@@ -78,6 +76,44 @@ class Foundry_OB_Rest_Api {
     // FETCH PUBLIC POST
 
     $post = get_public_post($tracking_code);
+
+    $fields = array();
+
+    foreach($post['items'] as $item) {
+
+      $items = array();
+
+      foreach($item as $field) {
+        if(is_array($field['value'])) {
+
+          $item_arr = array();
+
+          foreach($field['value'] as $img) {
+            array_push($item_arr, wp_get_attachment_image_url($img));
+          }
+
+          array_push($items, array(
+            'label' => $field['label'],
+            'value' => $item_arr,
+            'is_media' => true,
+          ));
+          
+        } else {
+          array_push($items, array(
+            'label' => $field['label'],
+            'value' => $field['value'],
+            'is_media' => false,
+          ));
+        }
+      }
+
+      array_push($fields, $items);
+
+    }
+
+    $post['items'] = $fields;
+
+    // var_dump($post);
 
     if(count($post ) == 0) {
       return new WP_REST_Response(

@@ -73,6 +73,18 @@
               ->add_options( $field_opts )
           );
         }
+  
+        if($field['_type'] === 'media') {
+          array_push(
+            $fields,
+            Field::make(
+              'media_gallery', 
+              _FNDRY_OB_FIELD_PREFIX_ . str_slugify($field['name'], '_'), 
+              __($field['name']) 
+            )
+            ->set_type( array( 'image', 'video' ) ),
+          );
+        }
         
       }
 

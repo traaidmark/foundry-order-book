@@ -90,7 +90,15 @@
     <template x-for="item in order?.items">
       <ul>
         <template x-for="i in item">
-          <li><strong x-text="i.label"></strong><span x-text="i.value"></span></li>
+            <li :class="{ 'grid': i.is_media }">
+              <strong x-text="i.label"></strong>
+              <span x-text="i.value" x-show="!i.is_media"></span>
+              <div x-show="i.is_media">
+                <template x-for="img in i.value">
+                  <img :src="img" />
+                </template>
+              </div>
+            </li>
         </template>
       </ul>
     </template>

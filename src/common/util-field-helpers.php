@@ -31,6 +31,11 @@
         Field::make( 'text', 'name', __('Field Name') ),
         field_options(),
       ) )
+      
+      ->add_fields( 'media', array(
+        Field::make( 'text', 'name', __('Field Name') ),
+        field_options(),
+      ) )
 
       ->add_fields( 'select_field', array(
         Field::make( 'text', 'name', __('Field Name') ),
@@ -41,7 +46,11 @@
           __('Options')
         )
           ->set_attribute( 'placeholder', 'Item 1' )
-          ->set_help_text('Enter an item per line'),
+          ->set_help_text('Enter an item per line')
+
+      
+
+      
 
     ) )
     ->set_default_value($default_options);
@@ -53,8 +62,9 @@
   function field_options() {
     return Field::make( 'set', 'field-options', 'Field Options' )
       ->add_options( array(
-        'is_public' => 'Public Field',
         'is_required' => 'Required Field',
+        'is_public' => 'Display on Public Form',
+        'is_trackable' => 'Display on tracking form',
       ) 
     );
   }

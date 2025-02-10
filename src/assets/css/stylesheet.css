@@ -212,6 +212,21 @@
     font-size: 0.9rem;
   }
 
+  .fndry-results > ul > li.grid {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    
+    color: var(--fndry-ob-color-light);
+    font-size: 0.9rem;
+  }
+  .fndry-results > ul > li.grid > div {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
   .fndry-results > ul > li > strong {
     color: var(--fndry-ob-color-dark);
     font-weight: bold;
